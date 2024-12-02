@@ -1,0 +1,35 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: polygon-zkevm-cardona
+    source:
+      address: "0x62ec2bA24fFe60f0Bf8A0E9cf17F0A83a981D0aE"
+      abi: Contract
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AgreementCreated
+        - RentPaid
+        - SecuityDeposited
+        - TenureCompleted
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: AgreementCreated(address,address,uint256,uint256,uint256,uint256,uint256)
+          handler: handleAgreementCreated
+        - event: RentPaid(address,address,uint256,uint256)
+          handler: handleRentPaid
+        - event: SecuityDeposited(address,address,uint256,uint256)
+          handler: handleSecuityDeposited
+        - event: TenureCompleted(uint256,address,address,uint256)
+          handler: handleTenureCompleted
+      file: ./src/contract.ts
