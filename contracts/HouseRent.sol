@@ -31,7 +31,5 @@ contract HouseRent {
     event SecuityDeposited(address ownerAddress,address tenantAddress,uint256 completionTime , uint256 agreementId);
     event RentPaid(address ownerAddress,address tenantAddress,uint256 datePaid , uint256 AgreementId);
     event TenureCompleted(uint256 agreementId , address ownerAddress , address tenatAddress,uint256 refundAmount);
-
     
-
 }
