@@ -2,7 +2,6 @@
 // yours, or create new ones.
 
 const path = require("path");
-require("dotenv");
 
 async function main() {
   // This is just a convenience check
@@ -22,11 +21,9 @@ async function main() {
   );
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
-  const USDTConctractAddress = process.env.USDTConctractAddress||"0xd966c20F83f606466C32441e1007Bf0cd65f955f";
-  const priceFeedAddress="0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1"
 
-  const Token = await ethers.getContractFactory("HouseRent");
-  const token = await Token.deploy(USDTConctractAddress,priceFeedAddress);
+  const Token = await ethers.getContractFactory("USDT");
+  const token = await Token.deploy();
   await token.deployed();
 
   console.log("Contract address:", token.address);
@@ -37,7 +34,13 @@ async function main() {
 
 function saveFrontendFiles(token) {
   const fs = require("fs");
-  const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
+  const contractsDir = path.join(
+    __dirname,
+    "..",
+    "frontend",
+    "src",
+    "contracts"
+  );
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
@@ -48,10 +51,10 @@ function saveFrontendFiles(token) {
     JSON.stringify({ Token: token.address }, undefined, 2)
   );
 
-  const TokenArtifact = artifacts.readArtifactSync("HouseRent");
+  const TokenArtifact = artifacts.readArtifactSync("USDT");
 
   fs.writeFileSync(
-    path.join(contractsDir, "HouseRent.json"),
+    path.join(contractsDir, "USDT.json"),
     JSON.stringify(TokenArtifact, null, 2)
   );
 }
