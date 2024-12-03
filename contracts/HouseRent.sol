@@ -3,7 +3,6 @@ pragma solidity ^0.8.20;
 
 // import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-// import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 
@@ -11,7 +10,8 @@ contract HouseRent {
     uint256 counter;
     IERC20 public usdtToken;
     AggregatorV3Interface internal priceFeed; // ETH -> USDT
-
+    uint MONTH_TIME =30*24*60*60;
+    uint DAY_TIME =24*60*60;
 
     struct Agreement {
         uint256 agreementId;
@@ -20,6 +20,7 @@ contract HouseRent {
         uint256 securityDeposit;
         uint256 monthlyRent;
         uint256 startTime;
+        uint256 endTime;
         uint256 tenure;
         uint256 lastRentPaid; // keeps track of time of last rent payment
         bool isActive; //0--> Inactive , 1-->Active
@@ -116,7 +117,7 @@ contract HouseRent {
         );
 
         uint256 startTime = block.timestamp;
-        // uint256 endTime = block.timestamp + tenureInMonths*30*24*60*60;
+        uint256 endTime = block.timestamp + tenureInMonths*MONTH_TIME;
 
         agreementList[counter] = Agreement({
             agreementId: counter,
@@ -125,6 +126,7 @@ contract HouseRent {
             securityDeposit: securityDeposit,
             monthlyRent: monthlyRent,
             startTime: startTime,
+            endTime:endTime,
             tenure: tenureInMonths,
             lastRentPaid: startTime,
             isActive: true
@@ -188,9 +190,19 @@ contract HouseRent {
             "Paying to wrong owner"
         );
         //decrease the tenure
-        agreementList[agreementId].tenure =
-            agreementList[agreementId].tenure -
-            1;
+        Agreement storage agreement = agreementList[agreementId];
+        uint currMonth= ((agreement.endTime - agreement.startTime)/(MONTH_TIME))-agreement.tenure;
+
+        // check if rent is paid in time and update the reputation accordingly
+        uint currRepuatation= getReputation(agreement.tenantAddress);
+        if(block.timestamp> agreement.startTime+ currMonth*MONTH_TIME+5*DAY_TIME){
+            reputationList[agreement.tenantAddress].push(currRepuatation-(1000-currRepuatation)/10);
+        }
+        else {
+            reputationList[agreement.tenantAddress].push(currRepuatation+(1000-currRepuatation)/20);
+        }
+
+        agreementList[agreementId].tenure =agreement.tenure -1;
         agreementList[agreementId].lastRentPaid = block.timestamp;
 
         emit RentPaid(
@@ -236,6 +248,10 @@ contract HouseRent {
         initializeReputation(user);
         uint256 num = reputationList[user].length;
         return reputationList[user][num - 1];
+    }
+
+    function getReputationHistory(address user) public view returns (uint256[] memory){
+        return reputationList[user];
     }
 
     function getCurrentTimeStamp() public view returns (uint256) {

@@ -1,3 +1,15 @@
+type AgreementCancelled @entity(immutable: true) {
+  id: Bytes!
+  agreementId: BigInt! # uint256
+  ownerAddress: Bytes! # address
+  tenantAddress: Bytes! # address
+  securityDeposit: BigInt! # uint256
+  isActive: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
 type AgreementCreated @entity(immutable: true) {
   id: Bytes!
   ownerAddress: Bytes! # address
@@ -7,6 +19,7 @@ type AgreementCreated @entity(immutable: true) {
   startTime: BigInt! # uint256
   endTime: BigInt! # uint256
   agreementId: BigInt! # uint256
+  isActive: Boolean! # bool
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -16,8 +29,9 @@ type RentPaid @entity(immutable: true) {
   id: Bytes!
   ownerAddress: Bytes! # address
   tenantAddress: Bytes! # address
+  monthlyRent: BigInt! # uint256
   datePaid: BigInt! # uint256
-  AgreementId: BigInt! # uint256
+  agreementId: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
@@ -27,7 +41,8 @@ type SecuityDeposited @entity(immutable: true) {
   id: Bytes!
   ownerAddress: Bytes! # address
   tenantAddress: Bytes! # address
-  completionTime: BigInt! # uint256
+  securityDeposit: BigInt! # uint256
+  datePaid: BigInt! # uint256
   agreementId: BigInt! # uint256
   blockNumber: BigInt!
   blockTimestamp: BigInt!
@@ -38,8 +53,9 @@ type TenureCompleted @entity(immutable: true) {
   id: Bytes!
   agreementId: BigInt! # uint256
   ownerAddress: Bytes! # address
-  tenatAddress: Bytes! # address
+  tenantAddress: Bytes! # address
   refundAmount: BigInt! # uint256
+  isActive: Boolean! # bool
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

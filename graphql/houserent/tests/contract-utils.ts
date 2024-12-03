@@ -1,11 +1,54 @@
 import { newMockEvent } from "matchstick-as"
-import { ethereum, Address, BigInt } from "@graphprotocol/graph-ts"
+import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
 import {
+  AgreementCancelled,
   AgreementCreated,
   RentPaid,
   SecuityDeposited,
   TenureCompleted
 } from "../generated/Contract/Contract"
+
+export function createAgreementCancelledEvent(
+  agreementId: BigInt,
+  ownerAddress: Address,
+  tenantAddress: Address,
+  securityDeposit: BigInt,
+  isActive: boolean
+): AgreementCancelled {
+  let agreementCancelledEvent = changetype<AgreementCancelled>(newMockEvent())
+
+  agreementCancelledEvent.parameters = new Array()
+
+  agreementCancelledEvent.parameters.push(
+    new ethereum.EventParam(
+      "agreementId",
+      ethereum.Value.fromUnsignedBigInt(agreementId)
+    )
+  )
+  agreementCancelledEvent.parameters.push(
+    new ethereum.EventParam(
+      "ownerAddress",
+      ethereum.Value.fromAddress(ownerAddress)
+    )
+  )
+  agreementCancelledEvent.parameters.push(
+    new ethereum.EventParam(
+      "tenantAddress",
+      ethereum.Value.fromAddress(tenantAddress)
+    )
+  )
+  agreementCancelledEvent.parameters.push(
+    new ethereum.EventParam(
+      "securityDeposit",
+      ethereum.Value.fromUnsignedBigInt(securityDeposit)
+    )
+  )
+  agreementCancelledEvent.parameters.push(
+    new ethereum.EventParam("isActive", ethereum.Value.fromBoolean(isActive))
+  )
+
+  return agreementCancelledEvent
+}
 
 export function createAgreementCreatedEvent(
   ownerAddress: Address,
@@ -14,7 +57,8 @@ export function createAgreementCreatedEvent(
   monthlyRent: BigInt,
   startTime: BigInt,
   endTime: BigInt,
-  agreementId: BigInt
+  agreementId: BigInt,
+  isActive: boolean
 ): AgreementCreated {
   let agreementCreatedEvent = changetype<AgreementCreated>(newMockEvent())
 
@@ -62,6 +106,9 @@ export function createAgreementCreatedEvent(
       ethereum.Value.fromUnsignedBigInt(agreementId)
     )
   )
+  agreementCreatedEvent.parameters.push(
+    new ethereum.EventParam("isActive", ethereum.Value.fromBoolean(isActive))
+  )
 
   return agreementCreatedEvent
 }
@@ -69,8 +116,9 @@ export function createAgreementCreatedEvent(
 export function createRentPaidEvent(
   ownerAddress: Address,
   tenantAddress: Address,
+  monthlyRent: BigInt,
   datePaid: BigInt,
-  AgreementId: BigInt
+  agreementId: BigInt
 ): RentPaid {
   let rentPaidEvent = changetype<RentPaid>(newMockEvent())
 
@@ -90,14 +138,20 @@ export function createRentPaidEvent(
   )
   rentPaidEvent.parameters.push(
     new ethereum.EventParam(
+      "monthlyRent",
+      ethereum.Value.fromUnsignedBigInt(monthlyRent)
+    )
+  )
+  rentPaidEvent.parameters.push(
+    new ethereum.EventParam(
       "datePaid",
       ethereum.Value.fromUnsignedBigInt(datePaid)
     )
   )
   rentPaidEvent.parameters.push(
     new ethereum.EventParam(
-      "AgreementId",
-      ethereum.Value.fromUnsignedBigInt(AgreementId)
+      "agreementId",
+      ethereum.Value.fromUnsignedBigInt(agreementId)
     )
   )
 
@@ -107,7 +161,8 @@ export function createRentPaidEvent(
 export function createSecuityDepositedEvent(
   ownerAddress: Address,
   tenantAddress: Address,
-  completionTime: BigInt,
+  securityDeposit: BigInt,
+  datePaid: BigInt,
   agreementId: BigInt
 ): SecuityDeposited {
   let secuityDepositedEvent = changetype<SecuityDeposited>(newMockEvent())
@@ -128,8 +183,14 @@ export function createSecuityDepositedEvent(
   )
   secuityDepositedEvent.parameters.push(
     new ethereum.EventParam(
-      "completionTime",
-      ethereum.Value.fromUnsignedBigInt(completionTime)
+      "securityDeposit",
+      ethereum.Value.fromUnsignedBigInt(securityDeposit)
+    )
+  )
+  secuityDepositedEvent.parameters.push(
+    new ethereum.EventParam(
+      "datePaid",
+      ethereum.Value.fromUnsignedBigInt(datePaid)
     )
   )
   secuityDepositedEvent.parameters.push(
@@ -145,8 +206,9 @@ export function createSecuityDepositedEvent(
 export function createTenureCompletedEvent(
   agreementId: BigInt,
   ownerAddress: Address,
-  tenatAddress: Address,
-  refundAmount: BigInt
+  tenantAddress: Address,
+  refundAmount: BigInt,
+  isActive: boolean
 ): TenureCompleted {
   let tenureCompletedEvent = changetype<TenureCompleted>(newMockEvent())
 
@@ -166,8 +228,8 @@ export function createTenureCompletedEvent(
   )
   tenureCompletedEvent.parameters.push(
     new ethereum.EventParam(
-      "tenatAddress",
-      ethereum.Value.fromAddress(tenatAddress)
+      "tenantAddress",
+      ethereum.Value.fromAddress(tenantAddress)
     )
   )
   tenureCompletedEvent.parameters.push(
@@ -175,6 +237,9 @@ export function createTenureCompletedEvent(
       "refundAmount",
       ethereum.Value.fromUnsignedBigInt(refundAmount)
     )
+  )
+  tenureCompletedEvent.parameters.push(
+    new ethereum.EventParam("isActive", ethereum.Value.fromBoolean(isActive))
   )
 
   return tenureCompletedEvent
