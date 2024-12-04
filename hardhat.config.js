@@ -13,5 +13,9 @@ module.exports = {
     url: `https://rpc.cardona.zkevm-rpc.com`,
     accounts: [process.env.ACCOUNT_PRIVATE_KEY],
     },
+    baseSepolia: {
+      url: "https://sepolia.base.org", 
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY], 
+    },
 },
 };
