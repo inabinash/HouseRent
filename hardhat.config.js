@@ -11,11 +11,11 @@ module.exports = {
   networks: {
     zkEVM: {
     url: `https://rpc.cardona.zkevm-rpc.com`,
-    accounts: [process.env.ACCOUNT_PRIVATE_KEY],
+    accounts: [process.env.ACCOUNT_PRIVATE_KEY||"73cb7b4d4f5a77f1f711665f87fb419aa1c5acf29206ee3a1ee4df931d934be5"],
     },
     baseSepolia: {
       url: "https://sepolia.base.org", 
-      accounts: [process.env.ACCOUNT_PRIVATE_KEY], 
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY||"73cb7b4d4f5a77f1f711665f87fb419aa1c5acf29206ee3a1ee4df931d934be5"], 
     },
 },
 };

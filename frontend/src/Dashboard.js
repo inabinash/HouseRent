@@ -1,12 +1,25 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
+import { getAccounts, getChainId, getContract } from './ethersRPC';
+import { createAgreement } from './useContract/writeContract';
 // import { useHistory } from 'react-router-dom';
 
 const Dashboard = () => {
 //   const history = useHistory();
+  // const [Contract , setContract] = useState("");
+  // const [currAccount , setCurrentAccount] =useState();
+  
 
-  const handleOwnerClick = () => {
+  const handleOwnerClick = async () => {
     // history.push('/owner');
+    getChainId();
+    const Contract= await getContract();
+    const account =await getAccounts();
+    console.log(Contract,account);
+    createAgreement(Contract,account,account,1,1,1);
+    // Contract
+    
+
   };
 
   const handleTenantClick = () => {
