@@ -11,11 +11,11 @@ const url =
   "https://api.studio.thegraph.com/query/58361/houserent/version/latest";
 
 //get agreements of owner
-export const GetAgreementsOfOwner = () => {
+export const GetAgreementsOfOwner = (ownerAddress) => {
   const { data, status } = useQuery({
     queryKey: ["data"],
     async queryFn() {
-      return await request(url, AGREEMENTS_BY_OWNER);
+      return await request(url, AGREEMENTS_BY_OWNER,{ownerAddress});
     },
   });
   return { data, status };
@@ -60,13 +60,13 @@ export const GetTransactionsOfOwner = () => {
 export const GetReputationOfUser = async (contract, user) => {
   if (!contract || !user) return null;
 
-  const res = await contract.methods.getReputationHistory(user).call();
+  const res = await contract.getReputationHistory(user).call();
   return res;
 };
 
 export const GetCurrentTimeStamp = async (contract) => {
   if (!contract) return null;
 
-  const res = await contract.methods.getCurrentTimeStamp();
+  const res = await contract.getCurrentTimeStamp();
   return res;
 };
