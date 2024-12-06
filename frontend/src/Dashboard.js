@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
 import ConnectCryptoModal from './components/ConnectWallet';
+import { getAccounts, getChainId, getContract } from './ethersRPC';
+import { createAgreement } from './useContract/writeContract';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -18,6 +20,12 @@ const Dashboard = () => {
   const connectWallet = () => {
     // Implement wallet connection logic here
     setIsModalOpen(true);
+    // getChainId();
+    // const Contract= await getContract();
+    // const account =await getAccounts();
+    // console.log(Contract,account);
+    // createAgreement(Contract,account,account,1,1,1);
+
   };
 
   return (
