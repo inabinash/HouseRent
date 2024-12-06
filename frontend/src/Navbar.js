@@ -1,9 +1,22 @@
-
 import React from 'react';
 import { Navbar, Typography, Button } from "@material-tailwind/react";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function AppNavbar() {
+const AppNavbar = () => {
+  const navigate = useNavigate();
+
+  const handleDashboardClick = () => {
+    navigate('/');
+  };
+
+  const handleOwnerClick = () => {
+    navigate('/owner');
+  };
+
+  const handleTenantClick = () => {
+    navigate('/tenant');
+  };
+
   return (
     <Navbar className="mx-auto px-4 py-2 bg-blue-500 ">
       <div className="container mx-auto flex justify-between items-center">
@@ -11,9 +24,9 @@ function AppNavbar() {
           HouseRent
         </Typography>
         <div className="flex space-x-4">
-            <Button variant="text" className="text-white">Dashboard</Button>
-            <Button variant="text" className="text-white">Owner</Button>
-            <Button variant="text" className="text-white">Tenant</Button>
+          <Button variant="text" className="text-white" onClick={handleDashboardClick}>Dashboard</Button>
+          <Button variant="text" className="text-white" onClick={handleOwnerClick}>Owner</Button>
+          <Button variant="text" className="text-white" onClick={handleTenantClick}>Tenant</Button>
         </div>
       </div>
     </Navbar>

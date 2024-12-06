@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
-// import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import ConnectCryptoModal from './components/ConnectWallet';
 
 const Dashboard = () => {
-//   const history = useHistory();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOwnerClick = () => {
-    // history.push('/owner');
+    navigate('/owner');
   };
 
   const handleTenantClick = () => {
-    // history.push('/tenant');
+    navigate('/tenant');
   };
 
   const connectWallet = () => {
     // Implement wallet connection logic here
+    setIsModalOpen(true);
   };
 
   return (
     <div className="container mx-auto mt-10">
+      <ConnectCryptoModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
       <Card>
         <CardBody>
           <Typography variant="h5" className="mb-2">
