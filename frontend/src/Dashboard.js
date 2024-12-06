@@ -17,14 +17,14 @@ const Dashboard = () => {
     navigate('/tenant');
   };
 
-  const connectWallet = () => {
+  const connectWallet = async () => {
     // Implement wallet connection logic here
     setIsModalOpen(true);
-    // getChainId();
-    // const Contract= await getContract();
-    // const account =await getAccounts();
-    // console.log(Contract,account);
-    // createAgreement(Contract,account,account,1,1,1);
+    getChainId();
+    const Contract= await getContract();
+    const account =await getAccounts();
+    console.log(Contract,account);
+    createAgreement(Contract,account,account,1,1,1);
 
   };
 

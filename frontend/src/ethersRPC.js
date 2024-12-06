@@ -5,7 +5,7 @@ const getContract =async ()=>{
     const provider =new  ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
     console.log("signer: " , signer)
-    const contractAddress = "0x8fd516f1d6bE21cF85e02Ce788fD3059506dcf39"
+    const contractAddress = "0x2a6A9c8D95d98EeA7985e959AAAB12e814678706"
     const contractABI=[
         {
           "inputs": [

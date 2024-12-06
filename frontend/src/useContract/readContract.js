@@ -15,7 +15,7 @@ export const GetAgreementsOfOwner = (ownerAddress) => {
   const { data, status } = useQuery({
     queryKey: ["data"],
     async queryFn() {
-      return await request(url, AGREEMENTS_BY_OWNER,{ownerAddress});
+      return await request(url, AGREEMENTS_BY_OWNER, { ownerAddress });
     },
   });
   return { data, status };
@@ -60,7 +60,7 @@ export const GetTransactionsOfOwner = () => {
 export const GetReputationOfUser = async (contract, user) => {
   if (!contract || !user) return null;
 
-  const res = await contract.getReputationHistory(user).call();
+  const res = await contract.getReputationHistory(user);
   return res;
 };
 

@@ -1,16 +1,20 @@
-import React ,{ useState ,useEffect}from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { useQuery ,QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  useQuery,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { ThemeProvider } from "@material-tailwind/react";
-import "./index.css"; // Ensure this 
+import "./index.css"; // Ensure this
 import App from "./App";
-
+// import { AgreementsProvider } from "./useContract/readContract";
 
 // export default function App() {
 //   // const provider = new ethers.providers.JsonRpcProvider(
 //   //   "https://base-sepolia.g.alchemy.com/v2/iuW6NKZN6fr2fPFAEh4EqR5dVl7jtNaI"
 //   // );
-  
+
 //   const [currAccount, setCurrentAccount] = useState("");
 //   const [contract, setContract] = useState();
 
@@ -24,7 +28,7 @@ import App from "./App";
 //     const contractABI = HouseRent.abi;
 //     const contractAddress = "0x2a6A9c8D95d98EeA7985e959AAAB12e814678706";
 //     await provider.send("eth_requestAccounts", []);
-//     const signer = await provider.getSigner(); 
+//     const signer = await provider.getSigner();
 //     console.log(signer);
 //     const contractInstance = new ethers.Contract(
 //       contractAddress,
@@ -33,7 +37,7 @@ import App from "./App";
 //     );
 //     setContract(contractInstance);
 //   }
-  
+
 //   async function getAccounts() {
 //     const { ethereum } = window;
 //     const accounts = await ethereum.request({
@@ -65,7 +69,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <App />
+        {/* <AgreementsProvider> */}
+          <App />
+        {/* </AgreementsProvider> */}
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>
