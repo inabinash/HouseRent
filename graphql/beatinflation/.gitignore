@@ -1,7 +1,7 @@
 # Graph CLI generated artifacts
 build/
 generated/
-
+package-lock.json
 # Dependency directories
 node_modules/
 jspm_packages/
