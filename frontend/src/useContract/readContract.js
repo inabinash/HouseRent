@@ -27,22 +27,22 @@ export const GetAgreementsOfOwner = (ownerAddress) => {
 };
 //get agreements of tentat
 
-export const GetAgreementsOfTentat = () => {
+export const GetAgreementsOfTentat = ({ tenantAddress }) => {
   const { data, status } = useQuery({
     queryKey: ["data"],
     async queryFn() {
-      return await request(url, AGREEMENTS_OF_TENANT);
+      return await request(url, AGREEMENTS_OF_TENANT, { tenantAddress });
     },
   });
   return { data, status };
 };
 
 //get list of transactions made by the tenant
-export const GetTransactionsOfTentant = () => {
+export const GetTransactionsOfTentant = ({ tenantAddress }) => {
   const { data, status } = useQuery({
     queryKey: ["data"],
     async queryFn() {
-      return await request(url, TRANSACTIONS_OF_TENANT);
+      return await request(url, TRANSACTIONS_OF_TENANT, { tenantAddress });
     },
   });
   return { data, status };
@@ -50,11 +50,11 @@ export const GetTransactionsOfTentant = () => {
 
 //get list of transactions made to the owner
 
-export const GetTransactionsOfOwner = () => {
+export const GetTransactionsOfOwner = (ownerAddress) => {
   const { data, status } = useQuery({
     queryKey: ["data"],
     async queryFn() {
-      return await request(url, TRANSACTIONS_OF_OWNER);
+      return await request(url, TRANSACTIONS_OF_OWNER, { ownerAddress });
     },
   });
   return { data, status };

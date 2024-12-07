@@ -14,8 +14,7 @@ const CreateAgreementDialog = ({ onCreate, onCancel, open, handleOpen }) => {
     tenantAddress: "",
     securityDeposit: "",
     monthlyRent: "",
-    startTime: "",
-    endTime: "",
+    tenureInMonths: "",
   });
 
   const handleChange = (e) => {
@@ -66,6 +65,7 @@ const CreateAgreementDialog = ({ onCreate, onCancel, open, handleOpen }) => {
                 name="securityDeposit"
                 value={formData.securityDeposit}
                 onChange={handleChange}
+                type="number"
                 required
               />
             </div>
@@ -75,26 +75,18 @@ const CreateAgreementDialog = ({ onCreate, onCancel, open, handleOpen }) => {
                 name="monthlyRent"
                 value={formData.monthlyRent}
                 onChange={handleChange}
+                type="number"
                 required
               />
             </div>
+            {/* tenureInMonths */}
             <div className="mb-4">
               <Input
-                label="Start Time"
-                name="startTime"
-                type="date"
-                value={formData.startTime}
+                label="Tenure in Months"
+                name="tenureInMonths"
+                value={formData.tenureInMonths}
                 onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <Input
-                label="End Time"
-                name="endTime"
-                type="date"
-                value={formData.endTime}
-                onChange={handleChange}
+                type="number"
                 required
               />
             </div>

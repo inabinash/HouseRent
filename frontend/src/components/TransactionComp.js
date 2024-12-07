@@ -1,5 +1,5 @@
-import React from 'react';
-import { PencilIcon } from "@heroicons/react/24/solid";
+import React from "react";
+import { CurrencyDollarIcon, PencilIcon } from "@heroicons/react/24/solid";
 import {
   ArrowDownTrayIcon,
   MagnifyingGlassIcon,
@@ -18,10 +18,24 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-const TABLE_HEAD = ["Agreement ID", "Owner Address", "Tenant Address", "Amount", "Date Paid", "Transaction Type", "Block Timestamp", ""];
+const TABLE_HEAD = [
+  "Agreement ID",
+  "Owner Address",
+  "Tenant Address",
+  "Amount",
+  "Date Paid",
+  "Transaction Type",
+  "Block Timestamp",
+  "",
+];
 // TODO: transaction type: SECURITY_DEPOSIT, MONTHLY_RENT, SECURITY_REFUND
 
-export function TransactionsTable({ rentPaid, tenureCompleteds }) {
+export function TransactionsTable({
+  rentPaid,
+  tenureCompleteds,
+  onPayRent,
+  isTenant = false,
+}) {
   const transactions = [...rentPaid, ...tenureCompleteds];
 
   return (
@@ -43,9 +57,20 @@ export function TransactionsTable({ rentPaid, tenureCompleteds }) {
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
-            <Button className="flex items-center gap-3" size="sm">
+            {/* <Button className="flex items-center gap-3" size="sm">
               <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
-            </Button>
+            </Button> */}
+            {/* pay rent now button */}
+            {isTenant && (
+              <Button
+                onClick={onPayRent}
+                className="flex items-center gap-3"
+                color="amber"
+                size="sm"
+              >
+                <CurrencyDollarIcon className="h-5 w-5" /> Pay Now
+              </Button>
+            )}
           </div>
         </div>
       </CardHeader>

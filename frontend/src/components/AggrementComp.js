@@ -23,8 +23,9 @@ const TABLE_HEAD = [
   "Tenant Address",
   "Security Deposit",
   "Monthly Rent",
-  "Start Time",
-  "End Time",
+  // "Start Time",
+  // "End Time",
+  "Tenure (Months)",
   "Agreement ID",
   "Is Active",
   "",
@@ -34,6 +35,9 @@ export function AgreementTable({
   agreements,
   onAgreementClick,
   onAgreementCreate,
+  onPaySecurityDeposit,
+  tableHead = TABLE_HEAD,
+  isTenant = false,
 }) {
   return (
     <Card className="h-full w-full">
@@ -54,13 +58,15 @@ export function AgreementTable({
                 icon={<MagnifyingGlassIcon className="h-5 w-5" />}
               />
             </div>
-            <Button
-              className="flex items-center gap-3"
-              size="sm"
-              onClick={onAgreementCreate}
-            >
-              <PlusIcon className="h-4 w-4" /> Create New Agreement
-            </Button>
+            {!isTenant && (
+              <Button
+                className="flex items-center gap-3"
+                size="sm"
+                onClick={onAgreementCreate}
+              >
+                <PlusIcon className="h-4 w-4" /> Create New Agreement
+              </Button>
+            )}
           </div>
         </div>
       </CardHeader>
@@ -68,7 +74,7 @@ export function AgreementTable({
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
-              {TABLE_HEAD.map((head) => (
+              {tableHead.map((head) => (
                 <th
                   key={head}
                   className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
@@ -86,7 +92,7 @@ export function AgreementTable({
           </thead>
           <tbody>
             {agreements.map((agreement, index) => {
-              const isLast = index === agreements.length - 1;
+              const isLast = index === tableHead.length - 1;
               const classes = isLast
                 ? "p-4"
                 : "p-4 border-b border-blue-gray-50";
@@ -144,16 +150,7 @@ export function AgreementTable({
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {agreement.startTime}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      color="blue-gray"
-                      className="font-normal"
-                    >
-                      {agreement.endTime}
+                      {agreement.tenureInMonths}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -174,6 +171,29 @@ export function AgreementTable({
                       color={agreement.isActive ? "green" : "red"}
                     />
                   </td>
+                  {isTenant && (
+                    <>
+                      <td className={classes + " text-center"}>
+                        <Tooltip content="Deposit Security">
+                          <Button
+                            onClick={() =>
+                              onPaySecurityDeposit(agreement.agreementId)
+                            }
+                            className="m-auto p-auto text-center"
+                            color="blue"
+                            disabled={
+                              !agreement.isActive ||
+                              agreement.isSecurityDeposited
+                            }
+                          >
+                            {agreement.isSecurityDeposited
+                              ? "Deposited"
+                              : "Deposit Now"}
+                          </Button>
+                        </Tooltip>
+                      </td>
+                    </>
+                  )}
                   <td className={classes}>
                     <Tooltip content="View Agreement">
                       <IconButton

@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import {
   GetAgreementsOfOwner,
   GetReputationOfUser,
+  GetTransactionsOfOwner,
 } from "./useContract/readContract";
 import {
   Card,
@@ -14,10 +15,12 @@ import ChartComponent from "./components/Chart";
 import { TransactionsTable } from "./components/TransactionComp";
 import AgreementTable from "./components/AggrementComp";
 import CreateAgreementDialog from "./components/CreateAgrement";
+import { getAccounts } from "./ethersRPC";
+import { createAgreement } from "./useContract/writeContract";
 
-const Owner = ({ contract, user }) => {
-  // const { data: agreements, status: agreementsStatus } = GetAgreementsOfOwner();
-  // const [reputation, setReputation] = useState([]);
+const Owner = () => {
+  const [agreements, setAgreements] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   const dummyAgreementsT = [
     {
@@ -45,8 +48,6 @@ const Owner = ({ contract, user }) => {
   ];
 
   const [dummyAgreements, setDummyAgreements] = useState(dummyAgreementsT);
-
-  // TODO: transaction type: SECURITY_DEPOSIT, MONTHLY_RENT, SECURITY_REFUND
 
   const rentPaids = [
     {
@@ -116,10 +117,9 @@ const Owner = ({ contract, user }) => {
     setShowCreateAgreement(true);
   };
 
-  const handleCreateAgreement = (newAgreement) => {
+  const handleCreateAgreement = async (newAgreement) => {
     // Add the new agreement to the list (this should be replaced with actual API call)
     console.log(newAgreement);
-    // dummyAgreements.push({ ...newAgreement, id: dummyAgreements.length + 1, agreementId: `A${dummyAgreements.length + 1}`, isActive: true });
     setDummyAgreements([
       ...dummyAgreements,
       {
@@ -130,11 +130,42 @@ const Owner = ({ contract, user }) => {
       },
     ]);
     setShowCreateAgreement(false);
+
+    // Call the API to create the agreement
+    const account = getAccounts();
+    const res = await createAgreement(
+      account,
+      newAgreement.tenantAddress,
+      newAgreement.securityDeposit,
+      newAgreement.monthlyRent,
+      newAgreement.tenureInMonths
+    );
+
+    console.log("Agreement created", res);
+
+    // Refresh the agreements list
+    const { data: agreements, status } = GetAgreementsOfOwner(account);
+    setAgreements(agreements);
+    
+
   };
 
   const handleCancelCreateAgreement = () => {
     setShowCreateAgreement(false);
   };
+
+  useEffect(() => {
+    const fetchAgreements = async () => {
+      const account =await getAccounts();
+      const { data: agreements, status } = GetAgreementsOfOwner(account);
+      setAgreements(agreements);
+
+      const { data: transactions, status: status2 } = GetTransactionsOfOwner(account);
+      setTransactions(transactions);
+    }
+    fetchAgreements();
+  }
+  , []);
 
   return (
     <div className="container mx-auto mt-10">
