@@ -62,21 +62,21 @@ export const GetTransactionsOfOwner = (ownerAddress) => {
 
 //get reputation list of user
 
-// export const GetReputationOfUser = async (contract, user) => {
-//   if (!contract || !user) return null;
+export const GetReputationOfUser = async (contract, user) => {
+  if (!contract || !user) return null;
 
-//   // const res = await contract.getReputationHistory(user);
-//   // return res;
-//   const res= await readContract({
-//     networkId: Coinbase.networks.BaseSepolia,
-//     abi:contractABI,
-//     contractAddress:contractAddress,
-//     method:"getReputationHistory",
-//     args:{user:user}
-//   })
+  const res = await contract.getReputationHistory(user);
+  return res;
+  // const res= await readContract({
+  //   networkId: Coinbase.networks.BaseSepolia,
+  //   abi:contractABI,
+  //   contractAddress:contractAddress,
+  //   method:"getReputationHistory",
+  //   args:{user:user}
+  // })
 
-//   return res;
-// };
+  // return res;
+};
 
 // export const GetCurrentTimeStamp = async (contract) => {
 //   if (!contract) return null;
