@@ -18,7 +18,8 @@ import {
   Input,
 } from "@material-tailwind/react";
 
-const TABLE_HEAD = ["ID", "Owner Address", "Tenant Address", "Amount", "Date Paid", "Agreement ID", "Block Timestamp", ""];
+const TABLE_HEAD = ["Agreement ID", "Owner Address", "Tenant Address", "Amount", "Date Paid", "Transaction Type", "Block Timestamp", ""];
+// TODO: transaction type: SECURITY_DEPOSIT, MONTHLY_RENT, SECURITY_REFUND
 
 export function TransactionsTable({ rentPaid, tenureCompleteds }) {
   const transactions = [...rentPaid, ...tenureCompleteds];
@@ -83,7 +84,7 @@ export function TransactionsTable({ rentPaid, tenureCompleteds }) {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {transaction.id}
+                      {transaction.agreementId}
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -128,7 +129,7 @@ export function TransactionsTable({ rentPaid, tenureCompleteds }) {
                       color="blue-gray"
                       className="font-normal"
                     >
-                      {transaction.agreementId}
+                      {transaction.transaction_type}
                     </Typography>
                   </td>
                   <td className={classes}>
