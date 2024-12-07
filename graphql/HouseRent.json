@@ -19,7 +19,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "agreementId",
         "type": "uint256"
@@ -141,7 +141,7 @@
         "type": "uint256"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "agreementId",
         "type": "uint256"
@@ -178,7 +178,7 @@
         "type": "uint256"
       },
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "agreementId",
         "type": "uint256"
@@ -191,7 +191,7 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "uint256",
         "name": "agreementId",
         "type": "uint256"
@@ -226,7 +226,11 @@
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "agreementId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "agreementId",
+        "type": "uint256"
+      }
     ],
     "name": "cancelAgreement",
     "outputs": [],
@@ -235,15 +239,31 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "ownerAddress", "type": "address" },
-      { "internalType": "address", "name": "tenantAddress", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "ownerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tenantAddress",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "securityDeposit",
         "type": "uint256"
       },
-      { "internalType": "uint256", "name": "monthlyRent", "type": "uint256" },
-      { "internalType": "uint256", "name": "tenureInMonths", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "monthlyRent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tenureInMonths",
+        "type": "uint256"
+      }
     ],
     "name": "createAgreement",
     "outputs": [],
@@ -252,14 +272,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "ownerAddress", "type": "address" },
-      { "internalType": "address", "name": "tenantAddress", "type": "address" },
+      {
+        "internalType": "address",
+        "name": "ownerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tenantAddress",
+        "type": "address"
+      },
       {
         "internalType": "uint256",
         "name": "securityDeposit",
         "type": "uint256"
       },
-      { "internalType": "uint256", "name": "agreementId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "agreementId",
+        "type": "uint256"
+      }
     ],
     "name": "depositSecurity",
     "outputs": [],
@@ -269,49 +301,93 @@
   {
     "inputs": [],
     "name": "getCurrentTimeStamp",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
     "name": "getLatestPrice",
-    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getReputation",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "getReputationHistory",
     "outputs": [
-      { "internalType": "uint256[]", "name": "", "type": "uint256[]" }
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_agreementId", "type": "uint256" }
+      {
+        "internalType": "uint256",
+        "name": "_agreementId",
+        "type": "uint256"
+      }
     ],
     "name": "getSecurityDepositInUSDT",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
     ],
     "name": "initializeReputation",
     "outputs": [],
@@ -320,10 +396,26 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "ownerAddress", "type": "address" },
-      { "internalType": "address", "name": "tenantAddress", "type": "address" },
-      { "internalType": "uint256", "name": "monthlyRent", "type": "uint256" },
-      { "internalType": "uint256", "name": "agreementId", "type": "uint256" }
+      {
+        "internalType": "address",
+        "name": "ownerAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "tenantAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "monthlyRent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "agreementId",
+        "type": "uint256"
+      }
     ],
     "name": "payMonthlyRent",
     "outputs": [],
@@ -334,7 +426,11 @@
     "inputs": [],
     "name": "usdtToken",
     "outputs": [
-      { "internalType": "contract IERC20", "name": "", "type": "address" }
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
     ],
     "stateMutability": "view",
     "type": "function"

@@ -1,4 +1,4 @@
-import { Coinbase ,readContract } from "@coinbase/coinbase-sdk";
+// import { Coinbase ,readContract } from "@coinbase/coinbase-sdk";
 import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
 import {
@@ -62,34 +62,34 @@ export const GetTransactionsOfOwner = () => {
 
 //get reputation list of user
 
-export const GetReputationOfUser = async (contract, user) => {
-  if (!contract || !user) return null;
+// export const GetReputationOfUser = async (contract, user) => {
+//   if (!contract || !user) return null;
 
-  // const res = await contract.getReputationHistory(user);
-  // return res;
-  const res= await readContract({
-    networkId: Coinbase.networks.BaseSepolia,
-    abi:contractABI,
-    contractAddress:contractAddress,
-    method:"getReputationHistory",
-    args:{user:user}
-  })
+//   // const res = await contract.getReputationHistory(user);
+//   // return res;
+//   const res= await readContract({
+//     networkId: Coinbase.networks.BaseSepolia,
+//     abi:contractABI,
+//     contractAddress:contractAddress,
+//     method:"getReputationHistory",
+//     args:{user:user}
+//   })
 
-  return res;
-};
+//   return res;
+// };
 
-export const GetCurrentTimeStamp = async (contract) => {
-  if (!contract) return null;
+// export const GetCurrentTimeStamp = async (contract) => {
+//   if (!contract) return null;
 
-  // const res = await contract.getCurrentTimeStamp();
-  // return res;
-  const res= await readContract({
-    networkId: Coinbase.networks.BaseSepolia,
-    abi:contractABI,
-    contractAddress:contractAddress,
-    method:"getCurrentTimeStamp",
-    args:{}
-  })
+//   // const res = await contract.getCurrentTimeStamp();
+//   // return res;
+//   const res= await readContract({
+//     networkId: Coinbase.networks.BaseSepolia,
+//     abi:contractABI,
+//     contractAddress:contractAddress,
+//     method:"getCurrentTimeStamp",
+//     args:{}
+//   })
 
-  return res;
-};
+//   return res;
+// };

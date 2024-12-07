@@ -1,2 +1,0 @@
-Subgraph endpoints:
-Queries (HTTP):     https://api.studio.thegraph.com/query/58361/houserent/v0.0.1

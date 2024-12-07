@@ -58,7 +58,8 @@ export function createAgreementCreatedEvent(
   startTime: BigInt,
   endTime: BigInt,
   agreementId: BigInt,
-  isActive: boolean
+  isActive: boolean,
+  isSecurityDeposited: boolean
 ): AgreementCreated {
   let agreementCreatedEvent = changetype<AgreementCreated>(newMockEvent())
 
@@ -108,6 +109,12 @@ export function createAgreementCreatedEvent(
   )
   agreementCreatedEvent.parameters.push(
     new ethereum.EventParam("isActive", ethereum.Value.fromBoolean(isActive))
+  )
+  agreementCreatedEvent.parameters.push(
+    new ethereum.EventParam(
+      "isSecurityDeposited",
+      ethereum.Value.fromBoolean(isSecurityDeposited)
+    )
   )
 
   return agreementCreatedEvent

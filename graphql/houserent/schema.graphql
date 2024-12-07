@@ -20,6 +20,7 @@ type AgreementCreated @entity(immutable: true) {
   endTime: BigInt! # uint256
   agreementId: BigInt! # uint256
   isActive: Boolean! # bool
+  isSecurityDeposited: Boolean! # bool
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

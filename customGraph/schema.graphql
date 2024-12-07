@@ -1,8 +1,3 @@
-enum SecurityDepositStatus {
-  DEPOSITED
-  NOT_DEPOSITED
-}
-
 enum TransactionType {
   SECURITY_DEPOSIT
   MONTHLY_RENT
@@ -19,7 +14,7 @@ type Agreement @entity {
   endTime: BigInt!
   agreementId: BigInt!
   isActive: Boolean!
-  isSecurityDeposited: SecurityDepositStatus! # Enum-like value
+  isSecurityDeposited: Boolean! # Enum-like value
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!

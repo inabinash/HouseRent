@@ -1,6 +1,0 @@
-type ExampleEntity @entity {
-  id: Bytes!
-  count: BigInt!
-  agreementId: BigInt! # uint256
-  ownerAddress: Bytes! # address
-}
