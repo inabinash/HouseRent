@@ -3,8 +3,8 @@ import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
 import { useNavigate } from 'react-router-dom';
 import ConnectCryptoModal from './components/ConnectWallet';
 import { getAccounts, getChainId, getContract } from './ethersRPC';
-import { createAgreement } from './useContract/writeContract';
-
+// import { createAgreement } from './useContract/writeContract';
+import { createAgreement } from './useContract/demoWriteContract';
 const Dashboard = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);

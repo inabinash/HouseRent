@@ -1,0 +1,35 @@
+enum SecurityDepositStatus {
+  DEPOSITED
+  NOT_DEPOSITED
+}
+
+enum TransactionType {
+  SECURITY_DEPOSIT
+  MONTHLY_RENT
+  SECURITY_REFUND
+}
+
+type Agreement @entity {
+  id: Bytes!
+  ownerAddress: Bytes!
+  tenantAddress: Bytes!
+  securityDeposit: BigInt!
+  monthlyRent: BigInt!
+  startTime: BigInt!
+  endTime: BigInt!
+  agreementId: BigInt!
+  isActive: Boolean!
+  isSecurityDeposited: SecurityDepositStatus! # Enum-like value
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transaction @entity(immutable: true) {
+  id: Bytes!
+  agreementId: BigInt!
+  ownerAddress: Bytes!
+  tenantAddress: Bytes!
+  amount: BigInt!
+  type: TransactionType! # Enum-like value
+}

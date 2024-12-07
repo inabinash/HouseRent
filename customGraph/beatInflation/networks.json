@@ -1,0 +1,8 @@
+{
+  "base-sepolia": {
+    "HouseRent": {
+      "address": "0x9d7bBf0692C9631E92DF3C383CeF675fffD1c597",
+      "startBlock": 18893961
+    }
+  }
+}

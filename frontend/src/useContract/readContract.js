@@ -1,3 +1,4 @@
+import { Coinbase ,readContract } from "@coinbase/coinbase-sdk";
 import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
 import {
@@ -6,6 +7,10 @@ import {
   AGREEMENTS_BY_OWNER,
   AGREEMENTS_OF_TENANT,
 } from "./graph_queries";
+
+const contractJson = require("../contracts/HouseRent.json");
+const contractABI = contractJson.abi;
+const contractAddress = "0x2a6A9c8D95d98EeA7985e959AAAB12e814678706"
 
 const url =
   "https://api.studio.thegraph.com/query/58361/houserent/version/latest";
@@ -60,13 +65,31 @@ export const GetTransactionsOfOwner = () => {
 export const GetReputationOfUser = async (contract, user) => {
   if (!contract || !user) return null;
 
-  const res = await contract.getReputationHistory(user);
+  // const res = await contract.getReputationHistory(user);
+  // return res;
+  const res= await readContract({
+    networkId: Coinbase.networks.BaseSepolia,
+    abi:contractABI,
+    contractAddress:contractAddress,
+    method:"getReputationHistory",
+    args:{user:user}
+  })
+
   return res;
 };
 
 export const GetCurrentTimeStamp = async (contract) => {
   if (!contract) return null;
 
-  const res = await contract.getCurrentTimeStamp();
+  // const res = await contract.getCurrentTimeStamp();
+  // return res;
+  const res= await readContract({
+    networkId: Coinbase.networks.BaseSepolia,
+    abi:contractABI,
+    contractAddress:contractAddress,
+    method:"getCurrentTimeStamp",
+    args:{}
+  })
+
   return res;
 };

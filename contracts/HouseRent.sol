@@ -38,39 +38,39 @@ contract HouseRent {
     }
 
     event AgreementCreated(
-        address ownerAddress,
-        address tenantAddress,
+        address indexed ownerAddress,
+        address indexed tenantAddress,
         uint256 securityDeposit,
         uint256 monthlyRent,
         uint256 startTime,
         uint256 endTime,
-        uint256 agreementId,
+        uint256 indexed agreementId,
         bool isActive,
         bool isSecurityDeposited
     );
     event SecuityDeposited(
-        address ownerAddress,
-        address tenantAddress,
+        address indexed ownerAddress,
+        address indexed tenantAddress,
         uint256 securityDeposit,
         uint256 datePaid,
-        uint256 agreementId
+        uint256 indexed agreementId
     );
     event RentPaid(
-        address ownerAddress,
-        address tenantAddress,
+        address indexed ownerAddress,
+        address indexed tenantAddress,
         uint monthlyRent,
         uint256 datePaid,
-        uint256 agreementId
+        uint256 indexed agreementId
     );
     event TenureCompleted(
-        uint256 agreementId,
+        uint256 indexed agreementId,
         address ownerAddress,
         address tenantAddress,
         uint256 refundAmount,
         bool isActive
     );
     event AgreementCancelled(
-        uint256 agreementId,
+        uint256 indexed agreementId,
         address ownerAddress,
         address tenantAddress,
         uint256 securityDeposit,
