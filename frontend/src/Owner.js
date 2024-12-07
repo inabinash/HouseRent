@@ -21,6 +21,7 @@ import { createAgreement } from "./useContract/writeContract";
 const Owner = () => {
   const [agreements, setAgreements] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [ownerAddress, setOwnerAddress] = useState(null);
 
   const dummyAgreementsT = [
     {
@@ -182,6 +183,7 @@ const Owner = () => {
       <CreateAgreementDialog
         onCreate={handleCreateAgreement}
         onCancel={handleCancelCreateAgreement}
+        ownerAddress={ownerAddress}
         open={showCreateAgreement}
         handleOpen={() => setShowCreateAgreement(false)}
       />

@@ -8,9 +8,9 @@ import {
   Dialog,
 } from "@material-tailwind/react";
 
-const CreateAgreementDialog = ({ onCreate, onCancel, open, handleOpen }) => {
+const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleOpen }) => {
   const [formData, setFormData] = useState({
-    ownerAddress: "",
+    ownerAddress: ownerAddress || "",
     tenantAddress: "",
     securityDeposit: "",
     monthlyRent: "",
@@ -45,8 +45,8 @@ const CreateAgreementDialog = ({ onCreate, onCancel, open, handleOpen }) => {
               <Input
                 label="Owner Address"
                 name="ownerAddress"
-                // disabled
-                value={formData.ownerAddress}
+                disabled={ownerAddress ? true : false}
+                value={ownerAddress ?? formData.ownerAddress}
                 onChange={handleChange}
               />
             </div>
