@@ -1,3 +1,4 @@
+import { Bytes } from "@graphprotocol/graph-ts"
 import {
   AgreementCancelled as AgreementCancelledEvent,
   AgreementCreated as AgreementCreatedEvent,
@@ -15,7 +16,7 @@ import {
 
 export function handleAgreementCancelled(event: AgreementCancelledEvent): void {
   let entity = new AgreementCancelled(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
+    Bytes.fromHexString(event.params.agreementId.toHex())
   )
   entity.agreementId = event.params.agreementId
   entity.ownerAddress = event.params.ownerAddress
@@ -32,7 +33,7 @@ export function handleAgreementCancelled(event: AgreementCancelledEvent): void {
 
 export function handleAgreementCreated(event: AgreementCreatedEvent): void {
   let entity = new AgreementCreated(
-    event.transaction.hash.concatI32(event.logIndex.toI32())
+    Bytes.fromHexString(event.params.agreementId.toHex())
   )
   entity.ownerAddress = event.params.ownerAddress
   entity.tenantAddress = event.params.tenantAddress

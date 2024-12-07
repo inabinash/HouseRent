@@ -114,10 +114,7 @@ contract HouseRent {
     ) public payable {
         require(ownerAddress != address(0), "ownerAddress must be non-zero");
         require(tenantAddress != address(0), "tenantAddress must be non-zero");
-        require(
-            ownerAddress != msg.sender,
-            "Agreemrnt should be created by the owner only"
-        );
+  
 
         uint256 startTime = block.timestamp;
         uint256 endTime = block.timestamp + tenureInMonths * MONTH_TIME;

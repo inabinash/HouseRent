@@ -25,7 +25,9 @@ const createAgreement = async (
     tenureInMonths
   );
   const res = await tx.wait();
+  
   console.log("Agreement created ,", res);
+  console.log("events :",res.events[res.events.length - 1])
   return res;
 };
 

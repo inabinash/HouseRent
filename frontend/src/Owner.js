@@ -133,8 +133,11 @@ const Owner = () => {
     setShowCreateAgreement(false);
 
     // Call the API to create the agreement
-    const account = getAccounts();
-    const contract = getContract();
+    const account = await getAccounts();
+    const contract = await getContract();
+    console.log(contract);
+    console.log("account");
+    console.log(account);
     const res = await createAgreement(
       contract,
       account,
@@ -149,8 +152,6 @@ const Owner = () => {
     // Refresh the agreements list
     const { data: agreements, status } = GetAgreementsOfOwner(account);
     setAgreements(agreements);
-
-
   };
 
   const handleCancelCreateAgreement = () => {
@@ -159,16 +160,16 @@ const Owner = () => {
 
   useEffect(() => {
     const fetchAgreements = async () => {
-      const account =await getAccounts();
+      const account = await getAccounts();
       const { data: agreements, status } = GetAgreementsOfOwner(account);
       setAgreements(agreements);
 
-      const { data: transactions, status: status2 } = GetTransactionsOfOwner(account);
+      const { data: transactions, status: status2 } =
+        GetTransactionsOfOwner(account);
       setTransactions(transactions);
-    }
+    };
     fetchAgreements();
-  }
-  , []);
+  }, []);
 
   return (
     <div className="container mx-auto mt-10">
