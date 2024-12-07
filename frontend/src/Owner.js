@@ -15,7 +15,7 @@ import ChartComponent from "./components/Chart";
 import { TransactionsTable } from "./components/TransactionComp";
 import AgreementTable from "./components/AggrementComp";
 import CreateAgreementDialog from "./components/CreateAgrement";
-import { getAccounts } from "./ethersRPC";
+import { getAccounts, getContract } from "./ethersRPC";
 import { createAgreement } from "./useContract/writeContract";
 
 const Owner = () => {
@@ -133,7 +133,9 @@ const Owner = () => {
 
     // Call the API to create the agreement
     const account = getAccounts();
+    const contract = getContract();
     const res = await createAgreement(
+      contract,
       account,
       newAgreement.tenantAddress,
       newAgreement.securityDeposit,
@@ -146,7 +148,7 @@ const Owner = () => {
     // Refresh the agreements list
     const { data: agreements, status } = GetAgreementsOfOwner(account);
     setAgreements(agreements);
-    
+
 
   };
 
