@@ -1,4 +1,3 @@
-// import { Coinbase ,readContract } from "@coinbase/coinbase-sdk";
 import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
 import {
@@ -10,59 +9,69 @@ import {
 
 const contractJson = require("../contracts/HouseRent.json");
 const contractABI = contractJson.abi;
-const contractAddress = "0x2a6A9c8D95d98EeA7985e959AAAB12e814678706"
+const contractAddress = "0x2a6A9c8D95d98EeA7985e959AAAB12e814678706";
 
 const url =
   "https://api.studio.thegraph.com/query/58361/houserent/version/latest";
 
-//get agreements of owner
-export const GetAgreementsOfOwner = (ownerAddress) => {
-  const { data, status } = useQuery({
-    queryKey: ["data"],
-    async queryFn() {
-      return await request(url, AGREEMENTS_BY_OWNER, { ownerAddress });
+// Custom Hook to get agreements of owner
+export const useAgreementsOfOwner = (ownerAddress) => {
+  return useQuery(
+    ["data"],
+    async () => {
+      const response = await request(url, AGREEMENTS_BY_OWNER, { ownerAddress });
+      return response.data;
     },
-  });
-  return { data, status };
-};
-//get agreements of tentat
-
-export const GetAgreementsOfTentat = ({ tenantAddress }) => {
-  const { data, status } = useQuery({
-    queryKey: ["data"],
-    async queryFn() {
-      return await request(url, AGREEMENTS_OF_TENANT, { tenantAddress });
-    },
-  });
-  return { data, status };
+    {
+      enabled: !!ownerAddress, 
+    }
+  );
 };
 
-//get list of transactions made by the tenant
-export const GetTransactionsOfTentant = ({ tenantAddress }) => {
-  const { data, status } = useQuery({
-    queryKey: ["data"],
-    async queryFn() {
-      return await request(url, TRANSACTIONS_OF_TENANT, { tenantAddress });
+// Custom Hook to get agreements of tenant
+export const useAgreementsOfTenant = (tenantAddress) => {
+  return useQuery(
+    ["data"],
+    async () => {
+      const response = await request(url, AGREEMENTS_OF_TENANT, { tenantAddress });
+      return response.data;
     },
-  });
-  return { data, status };
+    {
+      enabled: !!tenantAddress,
+    }
+  );
 };
 
-//get list of transactions made to the owner
-
-export const GetTransactionsOfOwner = (ownerAddress) => {
-  const { data, status } = useQuery({
-    queryKey: ["data"],
-    async queryFn() {
-      return await request(url, TRANSACTIONS_OF_OWNER, { ownerAddress });
+// Custom Hook to get transactions of tenant
+export const useTransactionsOfTenant = (tenantAddress) => {
+  return useQuery(
+    ["data"],
+    async () => {
+      const response = await request(url, TRANSACTIONS_OF_TENANT, { tenantAddress });
+      return response.data;
     },
-  });
-  return { data, status };
+    {
+      enabled: !!tenantAddress,
+    }
+  );
 };
 
-//get reputation list of user
+// Custom Hook to get transactions of owner
+export const useTransactionsOfOwner = (ownerAddress) => {
+  return useQuery(
+    ["data"],
+    async () => {
+      const response = await request(url, TRANSACTIONS_OF_OWNER, { ownerAddress });
+      return response.data;
+    },
+    {
+      enabled: !!ownerAddress,
+    }
+  );
+};
 
-export const GetReputationOfUser = async (contract, user) => {
+// Function to get reputation list of user
+export const getReputationOfUser = async (contract, user) => {
   if (!contract || !user) return null;
 
   const res = await contract.getReputationHistory(user);

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import {
-  GetAgreementsOfOwner,
-  GetReputationOfUser,
-  GetTransactionsOfOwner,
+  useAgreementsOfOwner,
+  useTransactionsOfOwner,
 } from "./useContract/readContract";
 import {
-  Card,
-  CardBody,
   IconButton,
   Typography,
 } from "@material-tailwind/react";
-import ChartComponent from "./components/Chart";
 import { TransactionsTable } from "./components/TransactionComp";
 import AgreementTable from "./components/AggrementComp";
 import CreateAgreementDialog from "./components/CreateAgrement";
@@ -19,89 +15,15 @@ import { getAccounts, getContract } from "./ethersRPC";
 import { createAgreement } from "./useContract/writeContract";
 
 const Owner = () => {
-  const [agreements, setAgreements] = useState([]);
-  const [transactions, setTransactions] = useState([]);
-  const [ownerAddress, setOwnerAddress] = useState(null);
-
-  const dummyAgreementsT = [
-    {
-      id: "1",
-      ownerAddress: "0xOwnerAddress1",
-      tenantAddress: "0xTenantAddress1",
-      securityDeposit: "500",
-      monthlyRent: "1000",
-      startTime: "2023-01-01",
-      endTime: "2023-12-31",
-      agreementId: "A1",
-      isActive: true,
-    },
-    {
-      id: "2",
-      ownerAddress: "0xOwnerAddress2",
-      tenantAddress: "0xTenantAddress2",
-      securityDeposit: "600",
-      monthlyRent: "1200",
-      startTime: "2023-02-01",
-      endTime: "2023-11-30",
-      agreementId: "A2",
-      isActive: false,
-    },
-  ];
-
-  const [dummyAgreements, setDummyAgreements] = useState(dummyAgreementsT);
-
-  const rentPaids = [
-    {
-      id: "1",
-      ownerAddress: "0xOwnerAddress1",
-      tenantAddress: "0xTenantAddress1",
-      monthlyRent: "1000",
-      datePaid: "2023-01-01",
-      agreementId: "A1",
-      blockTimestamp: "1672531199",
-      transaction_type: "Rent Paid",
-    },
-    {
-      id: "2",
-      ownerAddress: "0xOwnerAddress2",
-      tenantAddress: "0xTenantAddress2",
-      monthlyRent: "1200",
-      datePaid: "2023-02-01",
-      agreementId: "A2",
-      blockTimestamp: "1675209599",
-      transaction_type: "Security Deposit",
-    },
-  ];
-
-  const tenureCompleteds = [
-    {
-      id: "1",
-      ownerAddress: "0xOwnerAddress1",
-      tenantAddress: "0xTenantAddress1",
-      refundAmount: "500",
-      datePaid: "2023-03-01",
-      agreementId: "A1",
-      blockTimestamp: "1677628799",
-      transaction_type: "Security Refund",
-    },
-    {
-      id: "2",
-      ownerAddress: "0xOwnerAddress2",
-      tenantAddress: "0xTenantAddress2",
-      refundAmount: "600",
-      datePaid: "2023-04-01",
-      agreementId: "A2",
-      blockTimestamp: "1680307199",
-      transaction_type: "Security Refund",
-    },
-  ];
+  const [contract, setContract] = useState(null);
+  const [user, setUser] = useState({ address: "" });
 
   const [selectedAgreement, setSelectedAgreement] = useState(null);
   const [showTransactions, setShowTransactions] = useState(false);
   const [showCreateAgreement, setShowCreateAgreement] = useState(false);
 
   const handleAgreementClick = (agreementId) => {
-    const agreementTransactions = rentPaids.filter(
+    const agreementTransactions = transactionsData.filter(
       (transaction) => transaction.agreementId === agreementId
     );
     setSelectedAgreement(agreementTransactions);
@@ -113,45 +35,44 @@ const Owner = () => {
     setSelectedAgreement(null);
   };
 
+  // Use Custom Hooks
+  const {
+    data: agreementsData,
+    loading: agreementsStatus,
+    refetch: refetchAgreements,
+  } = useAgreementsOfOwner(user.address);
+
+  const {
+    data: transactionsData,
+    loading: transactionsStatus,
+    refetch: refetchTransactions,
+  } = useTransactionsOfOwner(user.address);
+
   const handleCreateAgreementClick = () => {
     console.log("Create Agreement clicked");
     setShowCreateAgreement(true);
   };
 
-  const handleCreateAgreement = async (newAgreement) => {
-    // Add the new agreement to the list (this should be replaced with actual API call)
-    console.log(newAgreement);
-    setDummyAgreements([
-      ...dummyAgreements,
-      {
-        ...newAgreement,
-        id: dummyAgreements.length + 1,
-        agreementId: `A${dummyAgreements.length + 1}`,
-        isActive: true,
-      },
-    ]);
+
+  // Handle Create Agreement
+  const handleCreateAgreement = async ({ newAgreement }) => {
+    try {
+      console.log(newAgreement);
     setShowCreateAgreement(false);
-
-    // Call the API to create the agreement
-    const account = await getAccounts();
-    const contract = await getContract();
-    console.log(contract);
-    console.log("account");
-    console.log(account);
-    const res = await createAgreement(
-      contract,
-      account,
-      newAgreement.tenantAddress,
-      newAgreement.securityDeposit,
-      newAgreement.monthlyRent,
-      newAgreement.tenureInMonths
-    );
-
-    console.log("Agreement created", res);
-
-    // Refresh the agreements list
-    const { data: agreements, status } = GetAgreementsOfOwner(account);
-    setAgreements(agreements);
+      const res = await createAgreement(
+        contract,
+        newAgreement.ownerAddress,
+        newAgreement.tenantAddress,
+        newAgreement.securityDeposit,
+        newAgreement.monthlyRent,
+        newAgreement.tenureInMonths
+      );
+      console.log("Agreement created", res);
+      await refetchAgreements();
+      await refetchTransactions();
+    } catch (error) {
+      console.error("Error creating agreement:", error);
+    }
   };
 
   const handleCancelCreateAgreement = () => {
@@ -159,17 +80,37 @@ const Owner = () => {
   };
 
   useEffect(() => {
-    const fetchAgreements = async () => {
-      const account = await getAccounts();
-      const { data: agreements, status } = GetAgreementsOfOwner(account);
-      setAgreements(agreements);
+    // fetch the contract and user address
+    const fetchContract = async () => {
+      const contract = await getContract();
+      const accounts = await getAccounts();
 
-      const { data: transactions, status: status2 } =
-        GetTransactionsOfOwner(account);
-      setTransactions(transactions);
+      console.log("Accounts:", accounts);
+      console.log("Contract:", contract);
+
+      setUser({ address: accounts[0] });
+      setContract(contract);
     };
-    fetchAgreements();
+
+    fetchContract();
   }, []);
+
+  useEffect(() => {
+    if (contract && user.address) {
+      refetchAgreements();
+      refetchTransactions();
+    }
+  }
+  , [contract, user.address]);
+
+
+  if (agreementsStatus === "loading" || transactionsStatus === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (agreementsStatus === "error" || transactionsStatus === "error") {
+    return <div>Error loading data.</div>;
+  }
 
   return (
     <div className="container mx-auto mt-10">
@@ -184,7 +125,7 @@ const Owner = () => {
       <CreateAgreementDialog
         onCreate={handleCreateAgreement}
         onCancel={handleCancelCreateAgreement}
-        ownerAddress={ownerAddress}
+        ownerAddress={user.address}
         open={showCreateAgreement}
         handleOpen={() => setShowCreateAgreement(false)}
       />
@@ -195,17 +136,13 @@ const Owner = () => {
             <ArrowLeftIcon className="h-6 w-6" />
           </IconButton>
           <TransactionsTable
-            ownerAddress={"asfdadsf"}
+            ownerAddress={user.address}
             rentPaid={selectedAgreement}
-            tenureCompleteds={tenureCompleteds.filter(
-              (transaction) =>
-                transaction.agreementId === selectedAgreement[0].agreementId
-            )}
           />
         </>
       ) : (
         <AgreementTable
-          agreements={dummyAgreements}
+          agreements={agreementsData}
           onAgreementClick={handleAgreementClick}
           onAgreementCreate={handleCreateAgreementClick}
         />

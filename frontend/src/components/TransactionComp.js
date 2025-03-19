@@ -1,7 +1,6 @@
 import React from "react";
 import { CurrencyDollarIcon, PencilIcon } from "@heroicons/react/24/solid";
 import {
-  ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import {
@@ -10,9 +9,7 @@ import {
   Typography,
   Button,
   CardBody,
-  Chip,
   CardFooter,
-  Avatar,
   IconButton,
   Tooltip,
   Input,
@@ -32,11 +29,10 @@ const TABLE_HEAD = [
 
 export function TransactionsTable({
   rentPaid,
-  tenureCompleteds,
   onPayRent,
   isTenant = false,
 }) {
-  const transactions = [...rentPaid, ...tenureCompleteds];
+  const transactions = [...rentPaid];
 
   return (
     <Card className="h-full w-full">

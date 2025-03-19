@@ -1,7 +1,6 @@
 import React from "react";
-import { PencilIcon, EyeIcon, PlusIcon } from "@heroicons/react/24/solid";
+import { EyeIcon, PlusIcon } from "@heroicons/react/24/solid";
 import {
-  ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import {
