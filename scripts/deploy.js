@@ -22,11 +22,11 @@ async function main() {
   );
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
-  const USDTConctractAddress = process.env.USDTConctractAddress||"0xd966c20F83f606466C32441e1007Bf0cd65f955f";
-  const priceFeedAddress="0x4aDC67696bA383F43DD60A9e78F2C97Fbbfc7cb1"
 
+  const USDTConctractAddress = process.env.USDT_CONTRACT_ADDRESS;
+  console.log("USDTConctractAddress:",USDTConctractAddress);
   const Token = await ethers.getContractFactory("HouseRent");
-  const token = await Token.deploy(USDTConctractAddress,priceFeedAddress);
+  const token = await Token.deploy(USDTConctractAddress);
   await token.deployed();
 
   console.log("Contract address:", token.address);
