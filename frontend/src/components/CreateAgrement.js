@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import {
   Card,
-  CardBody,
+  CardContent,
   Typography,
   Input,
   Button,
   Dialog,
-} from "@material-tailwind/react";
+} from "@mui/material";
+import ContractContext from "../context/ContractContext";
+import { useContext } from "react";
 
 const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleOpen }) => {
+  
+  
   const [formData, setFormData] = useState({
     ownerAddress: ownerAddress || "",
     tenantAddress: "",
@@ -22,11 +26,11 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    onCreate(formData);
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log(formData);
+  //   onCreate(formData);
+  // };
 
   return (
     <Dialog
@@ -36,13 +40,14 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
       className="bg-transparent shadow-none"
     >
       <Card className="h-full w-full">
-        <CardBody>
+        <CardContent>
           <Typography variant="h5" className="mb-4">
             Create New Agreement
           </Typography>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e)=>onCreate(e , formData)}>
             <div className="mb-4">
               <Input
+                placeholder="Owner Address"
                 label="Owner Address"
                 name="ownerAddress"
                 disabled={ownerAddress ? true : false}
@@ -52,6 +57,7 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
             </div>
             <div className="mb-4">
               <Input
+                placeholder="Tenant Address"
                 label="Tenant Address"
                 name="tenantAddress"
                 value={formData.tenantAddress}
@@ -61,6 +67,7 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
             </div>
             <div className="mb-4">
               <Input
+                placeholder="Security Deposit"
                 label="Security Deposit"
                 name="securityDeposit"
                 value={formData.securityDeposit}
@@ -71,6 +78,7 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
             </div>
             <div className="mb-4">
               <Input
+                placeholder="Monthly Rent"
                 label="Monthly Rent"
                 name="monthlyRent"
                 value={formData.monthlyRent}
@@ -82,6 +90,7 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
             {/* tenureInMonths */}
             <div className="mb-4">
               <Input
+                placeholder="Tenure in Months"
                 label="Tenure in Months"
                 name="tenureInMonths"
                 value={formData.tenureInMonths}
@@ -97,7 +106,7 @@ const CreateAgreementDialog = ({ ownerAddress, onCreate, onCancel, open, handleO
               <Button type="submit">Create</Button>
             </div>
           </form>
-        </CardBody>
+        </CardContent>
       </Card>
     </Dialog>
   );

@@ -1,11 +1,18 @@
 const createAgreement = async (
   contract,
-  ownerAddress,
-  tenantAddress,
-  securityDeposit,
-  monthlyRent,
-  tenureInMonths
+  agreement
 ) => {
+  const {
+    ownerAddress,
+    tenantAddress,
+    securityDeposit,
+    monthlyRent,
+    tenureInMonths,
+  } = agreement;
+
+  console.log("ownerAddress", ownerAddress);
+  console.log("tenantAddress", tenantAddress);
+
   if (
     !contract ||
     !ownerAddress ||
@@ -24,10 +31,12 @@ const createAgreement = async (
     monthlyRent,
     tenureInMonths
   );
+
+  console.log("tx", tx);
   const res = await tx.wait();
   
   console.log("Agreement created ,", res);
-  console.log("events :",res.events[res.events.length - 1])
+  // console.log("events :",res.events[res.events.length - 1])
   return res;
 };
 

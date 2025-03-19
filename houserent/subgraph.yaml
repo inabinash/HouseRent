@@ -8,9 +8,9 @@ dataSources:
     name: Contract
     network: base-sepolia
     source:
-      address: "0x6AB7C7dB6E1acBd306C51776E2d28077F1833CC1"
+      address: "0x28Bc7B45b1A6f9246503c15FADCca2F391A2c4B9"
       abi: Contract
-      startBlock: 18903968
+      startBlock: 23276664
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -18,6 +18,8 @@ dataSources:
       entities:
         - AgreementCancelled
         - AgreementCreated
+        - LogDeposit
+        - LogPrice
         - RentPaid
         - SecuityDeposited
         - TenureCompleted
@@ -29,6 +31,10 @@ dataSources:
           handler: handleAgreementCancelled
         - event: AgreementCreated(indexed address,indexed address,uint256,uint256,uint256,uint256,indexed uint256,bool,bool)
           handler: handleAgreementCreated
+        - event: LogDeposit(uint256)
+          handler: handleLogDeposit
+        - event: LogPrice(int256)
+          handler: handleLogPrice
         - event: RentPaid(indexed address,indexed address,uint256,uint256,indexed uint256)
           handler: handleRentPaid
         - event: SecuityDeposited(indexed address,indexed address,uint256,uint256,indexed uint256)

@@ -3,6 +3,8 @@ import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts"
 import {
   AgreementCancelled,
   AgreementCreated,
+  LogDeposit,
+  LogPrice,
   RentPaid,
   SecuityDeposited,
   TenureCompleted
@@ -118,6 +120,33 @@ export function createAgreementCreatedEvent(
   )
 
   return agreementCreatedEvent
+}
+
+export function createLogDepositEvent(deposit: BigInt): LogDeposit {
+  let logDepositEvent = changetype<LogDeposit>(newMockEvent())
+
+  logDepositEvent.parameters = new Array()
+
+  logDepositEvent.parameters.push(
+    new ethereum.EventParam(
+      "deposit",
+      ethereum.Value.fromUnsignedBigInt(deposit)
+    )
+  )
+
+  return logDepositEvent
+}
+
+export function createLogPriceEvent(price: BigInt): LogPrice {
+  let logPriceEvent = changetype<LogPrice>(newMockEvent())
+
+  logPriceEvent.parameters = new Array()
+
+  logPriceEvent.parameters.push(
+    new ethereum.EventParam("price", ethereum.Value.fromSignedBigInt(price))
+  )
+
+  return logPriceEvent
 }
 
 export function createRentPaidEvent(

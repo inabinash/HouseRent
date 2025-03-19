@@ -320,3 +320,4 @@ contract HouseRent {
         return block.timestamp;
     }
 }
+

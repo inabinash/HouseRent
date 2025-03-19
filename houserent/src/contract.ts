@@ -1,7 +1,8 @@
-import { Bytes } from "@graphprotocol/graph-ts"
 import {
   AgreementCancelled as AgreementCancelledEvent,
   AgreementCreated as AgreementCreatedEvent,
+  LogDeposit as LogDepositEvent,
+  LogPrice as LogPriceEvent,
   RentPaid as RentPaidEvent,
   SecuityDeposited as SecuityDepositedEvent,
   TenureCompleted as TenureCompletedEvent
@@ -9,6 +10,8 @@ import {
 import {
   AgreementCancelled,
   AgreementCreated,
+  LogDeposit,
+  LogPrice,
   RentPaid,
   SecuityDeposited,
   TenureCompleted
@@ -16,7 +19,7 @@ import {
 
 export function handleAgreementCancelled(event: AgreementCancelledEvent): void {
   let entity = new AgreementCancelled(
-    Bytes.fromHexString(event.params.agreementId.toHex())
+    event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.agreementId = event.params.agreementId
   entity.ownerAddress = event.params.ownerAddress
@@ -33,7 +36,7 @@ export function handleAgreementCancelled(event: AgreementCancelledEvent): void {
 
 export function handleAgreementCreated(event: AgreementCreatedEvent): void {
   let entity = new AgreementCreated(
-    Bytes.fromHexString(event.params.agreementId.toHex())
+    event.transaction.hash.concatI32(event.logIndex.toI32())
   )
   entity.ownerAddress = event.params.ownerAddress
   entity.tenantAddress = event.params.tenantAddress
@@ -44,6 +47,32 @@ export function handleAgreementCreated(event: AgreementCreatedEvent): void {
   entity.agreementId = event.params.agreementId
   entity.isActive = event.params.isActive
   entity.isSecurityDeposited = event.params.isSecurityDeposited
+
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+
+  entity.save()
+}
+
+export function handleLogDeposit(event: LogDepositEvent): void {
+  let entity = new LogDeposit(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.deposit = event.params.deposit
+
+  entity.blockNumber = event.block.number
+  entity.blockTimestamp = event.block.timestamp
+  entity.transactionHash = event.transaction.hash
+
+  entity.save()
+}
+
+export function handleLogPrice(event: LogPriceEvent): void {
+  let entity = new LogPrice(
+    event.transaction.hash.concatI32(event.logIndex.toI32())
+  )
+  entity.price = event.params.price
 
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp

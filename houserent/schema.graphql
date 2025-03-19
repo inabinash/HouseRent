@@ -26,6 +26,22 @@ type AgreementCreated @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
+type LogDeposit @entity(immutable: true) {
+  id: Bytes!
+  deposit: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LogPrice @entity(immutable: true) {
+  id: Bytes!
+  price: BigInt! # int256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
 type RentPaid @entity(immutable: true) {
   id: Bytes!
   ownerAddress: Bytes! # address

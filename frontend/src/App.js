@@ -4,17 +4,21 @@ import Dashboard from './Dashboard';
 import Owner from './Owner';
 import AppNavbar from './Navbar';
 import Tenant from './Tenant';
+import { useContext } from 'react';
+import ContractContext from './context/ContractContext';
 
 function App() {
   return (
     <Router>
-      <AppNavbar />
+      {/* <AppNavbar /> */}
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/owner" element={<Owner />} />
         <Route path="/tenant" element={<Tenant />} />
       </Routes>
     </Router>
+    // <Dashboard />
+    // <button onClick={connectWallet}>Connect Wallet</button>
   );
 }
 
