@@ -90,7 +90,7 @@ export function AgreementTable({
             </tr>
           </thead>
           <tbody>
-            {agreements.map((agreement, index) => {
+            {agreements?.map((agreement, index) => {
               const isLast = index === tableHead.length - 1;
               const classes = isLast
                 ? "p-4"

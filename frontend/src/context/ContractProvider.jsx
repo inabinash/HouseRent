@@ -4,20 +4,17 @@ import { ethers } from "ethers";
 import houseContract from "../contracts/HouseRent.json";
 import { useNavigate } from "react-router-dom";
 
+
 const ContractProvider = ({ children }) => {
     const [contract, setContract] = useState(null);
     const [account, setAccount] = useState(null);
     
-    // useEffect(()=>{
-    //     // connectWallet();
-    //     if(account)
-    //     window.location.href = "/dashboard";
-    // },[account])
+
 
     const contractABI = houseContract.abi;
-    console.log("contractABI", contractABI);
+    // console.log("contractABI", contractABI);
     const contractAddress = "0x28Bc7B45b1A6f9246503c15FADCca2F391A2c4B9";
-    // const provider = new ethers.BrowserProvider(window.ethe)
+
     const connectWallet = async () => {
         if(!window.ethereum){
             alert("Install Metamask");

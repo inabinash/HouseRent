@@ -5,15 +5,15 @@ import {
 } from "@heroicons/react/24/outline";
 import {
   Card,
-  CardHeader,
   Typography,
   Button,
-  CardBody,
-  CardFooter,
+  CardContent,
+  CardActionArea,
   IconButton,
   Tooltip,
   Input,
-} from "@material-tailwind/react";
+  CardHeader
+} from "@mui/material";
 
 const TABLE_HEAD = [
   "Agreement ID",
@@ -32,7 +32,7 @@ export function TransactionsTable({
   onPayRent,
   isTenant = false,
 }) {
-  const transactions = [...rentPaid];
+  const transactions = [];
 
   return (
     <Card className="h-full w-full">
@@ -70,7 +70,7 @@ export function TransactionsTable({
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-auto px-0">
+      <CardContent className="overflow-auto px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>
             <tr>
@@ -174,8 +174,8 @@ export function TransactionsTable({
             })}
           </tbody>
         </table>
-      </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+      </CardContent>
+      <CardActionArea className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Button variant="outlined" size="sm">
           Previous
         </Button>
@@ -205,7 +205,7 @@ export function TransactionsTable({
         <Button variant="outlined" size="sm">
           Next
         </Button>
-      </CardFooter>
+      </CardActionArea>
     </Card>
   );
 }

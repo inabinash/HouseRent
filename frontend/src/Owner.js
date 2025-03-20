@@ -1,9 +1,6 @@
 import React, { useState , useContext} from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
-import {
-  useAgreementsOfOwner,
-  useTransactionsOfOwner,
-} from "./useContract/readContract";
+
 
 import { TransactionsTable } from "./components/TransactionComp";
 import AgreementTable from "./components/AggrementComp";
@@ -11,7 +8,8 @@ import CreateAgreementDialog from "./components/CreateAgrement";
 import { createAgreement } from "./useContract/writeContract";
 import { Typography , IconButton, Button} from "@mui/material";
 import ContractContext from "./context/ContractContext";
-
+import { useQuery } from "@tanstack/react-query";
+import { getAgreementsOfOwner } from "./useContract/readContract";
 
 const Owner = () => {
 
@@ -21,12 +19,10 @@ const Owner = () => {
   const [agreementsData, setAgreementsData] = useState([]);
 
   const { account ,contract} = useContext(ContractContext);
-
+  
   const handleAgreementClick = (agreementId) => {
-    // const agreementTransactions = transactionsData.filter(
-    //   (transaction) => transaction.agreementId === agreementId
-    // );
-    // setSelectedAgreement(agreementTransactions);
+    console.log("Agreement clicked", agreementId);
+    setSelectedAgreement(agreementId);
     setShowTransactions(true);
   };
 
@@ -89,8 +85,14 @@ const Owner = () => {
   };
 
 
+  const {data , isLoading} = useQuery(
+    {
+      queryKey: ["agreements" , account],
+      queryFn: ()=>getAgreementsOfOwner(account)
+    }
+  );
 
-
+  console.log("data", data);
 
 
   // if (agreementsStatus === "loading" || transactionsStatus === "loading") {
@@ -139,13 +141,17 @@ const Owner = () => {
             rentPaid={selectedAgreement}
           />
         </>
-      ) : (
-        <AgreementTable
-          agreements={agreementsData}
-          onAgreementClick={handleAgreementClick}
-          onAgreementCreate={handleCreateAgreementClick}
-        />
-      )}
+      ) : 
+          isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <AgreementTable
+              agreements={data?.agreementCreateds}
+              onAgreementClick={handleAgreementClick}
+              onAgreementCreate={handleCreateAgreementClick}
+            />
+          )
+      }
     </div>
   );
 };

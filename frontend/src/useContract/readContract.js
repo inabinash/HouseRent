@@ -9,12 +9,18 @@ import {
 
 const contractJson = require("../contracts/HouseRent.json");
 const contractABI = contractJson.abi;
-const contractAddress = "0x2a6A9c8D95d98EeA7985e959AAAB12e814678706";
+const contractAddress = "0x28Bc7B45b1A6f9246503c15FADCca2F391A2c4B9";
 
-const url =
-  "https://api.studio.thegraph.com/query/58361/houserent/version/latest";
+const url = 'https://api.studio.thegraph.com/query/58361/houserent/version/latest'
+
+const headers = { Authorization: 'Bearer b34f10f45e3086fdafe9a488aff659e9' }
 
 // Custom Hook to get agreements of owner
+
+export const getAgreementsOfOwner = async(ownerAddress)=>{
+  return  await request(url, AGREEMENTS_BY_OWNER, { ownerAddress } , headers);
+}
+
 export const useAgreementsOfOwner = (ownerAddress) => {
   return useQuery(
     ["data"],
