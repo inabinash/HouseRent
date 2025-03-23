@@ -32,4 +32,4 @@ dataSources:
           handler: handleSecuityDeposited
         - event: TenureCompleted(indexed uint256,address,address,uint256,bool)
           handler: handleTenureCompleted
-      file: mapping.ts
+      file: ./mapping.ts

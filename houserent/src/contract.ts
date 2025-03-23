@@ -30,7 +30,7 @@ export function handleAgreementCancelled(event: AgreementCancelledEvent): void {
   entity.blockNumber = event.block.number
   entity.blockTimestamp = event.block.timestamp
   entity.transactionHash = event.transaction.hash
-
+ console.log("hi iam called in agreement cancelled");
   entity.save()
 }
 

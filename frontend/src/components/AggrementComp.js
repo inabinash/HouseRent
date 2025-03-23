@@ -63,7 +63,7 @@ export function AgreementTable({
                 size="sm"
                 onClick={onAgreementCreate}
               >
-                <PlusIcon className="h-4 w-4" /> Create New Agreement
+                <PlusIcon className="h-4 w-4" /> Create New Agreement HIHIHIHIHIHIH
               </Button>
             )}
           </div>

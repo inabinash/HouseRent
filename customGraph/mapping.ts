@@ -16,12 +16,13 @@ import {
 } from "./generated/schema"
 
 export function bigIntToBytes(value: BigInt): Bytes {
-    return ByteArray.fromHexString(value.toHexString()) as Bytes;
+    return Bytes.fromByteArray(ByteArray.fromBigInt(value));
   }
 
 export function handleAgreementCreated(event: AgreementCreatedEvent):void{
     let bytesKey = bigIntToBytes(event.params.agreementId);
     let entity = new Agreement(bytesKey);
+
     entity.ownerAddress = event.params.ownerAddress
     entity.tenantAddress = event.params.tenantAddress
     entity.securityDeposit = event.params.securityDeposit
@@ -35,7 +36,8 @@ export function handleAgreementCreated(event: AgreementCreatedEvent):void{
     entity.blockNumber = event.block.number
     entity.blockTimestamp = event.block.timestamp
     entity.transactionHash = event.transaction.hash
-  
+
+    log.info("Agreement created with entityid {}", [(event.params.agreementId).toString()]);
     entity.save() 
 }
 

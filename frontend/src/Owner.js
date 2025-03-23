@@ -146,7 +146,7 @@ const Owner = () => {
             <div>Loading...</div>
           ) : (
             <AgreementTable
-              agreements={data?.agreementCreateds}
+              agreements={data?.agreements}
               onAgreementClick={handleAgreementClick}
               onAgreementCreate={handleCreateAgreementClick}
             />
