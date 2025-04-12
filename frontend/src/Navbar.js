@@ -1,36 +1,44 @@
-import React from 'react';
-import { Navbar, Typography, Button } from "@material-tailwind/react";
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import ContractContext from './context/ContractContext';
+import { fontWeight } from '@mui/system';
 
 const AppNavbar = () => {
-  const navigate = useNavigate();
+  const { account } = useContext(ContractContext); // Get the account ID from context
 
-  const handleDashboardClick = () => {
-    navigate('/');
-  };
-
-  const handleOwnerClick = () => {
-    navigate('/owner');
-  };
-
-  const handleTenantClick = () => {
-    navigate('/tenant');
+  // Function to shorten the account string
+  const shortenAccount = (account) => {
+    if (!account) return undefined; // Return empty string if account is not available 
+    return `${account.slice(0, 5)}...${account.slice(-3)}`; // Shorten to 0x34c...1d3 format
   };
 
   return (
-    <Navbar className="mx-auto px-4 py-2 bg-blue-500 ">
-      <div className="container mx-auto flex justify-between items-center">
-        <Typography as="a" href="/" variant="h6" className="text-white">
-          HouseRent
-        </Typography>
-        <div className="flex space-x-4">
-          <Button variant="text" className="text-white" onClick={handleDashboardClick}>Dashboard</Button>
-          <Button variant="text" className="text-white" onClick={handleOwnerClick}>Owner</Button>
-          <Button variant="text" className="text-white" onClick={handleTenantClick}>Tenant</Button>
-        </div>
-      </div>
-    </Navbar>
+    <div style={styles.navbar}>
+      <p style={styles.logo}>House<span style={{color:"blue"}}>Rent</span></p>
+      {account?<p style={styles.greeting}>Hi,
+        {' '} {shortenAccount(account)}</p>:null}
+    </div>
   );
-}
+};
+
+const styles = {
+  navbar: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '10px 20px',
+    backgroundColor: 'white', // White background
+  },
+  logo: {
+    fontSize: '1.5rem',
+    fontWeight: '700',
+    color: 'black',
+    cursor: 'pointer',
+  },
+  greeting: {
+    fontSize: '1rem',
+    fontWeight: '500',
+    color: '#333',
+  },
+};
 
 export default AppNavbar;

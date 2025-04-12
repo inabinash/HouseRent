@@ -1,26 +1,17 @@
 import React from 'react';
-// import { Navbar, Typography, Button } from "@material-tailwind/react"
-import { Navbar, Typography, Button } from "@mui/material";
-import { useNavigate } from 'react-router-dom';
+import Layout from './layout';
+import AgreementTable from './components/AgreementTable/AgreementTable';
 
 const Tenant = () => {
-  const navigate = useNavigate();
-
-  const handleDashboardClick = () => {
-    navigate('/');
-  };
-
-  const handleOwnerClick = () => {
-    navigate('/owner');
-  };
-
-  const handleTenantClick = () => {
-    navigate('/tenant');
-  };
-
   return (
-    <div> this is tenat </div>
+    <Layout>
+      <div className="container mx-auto mt-10">
+        <h1 className="text-2xl font-bold">Tenant Dashboard</h1>
+        <p>Welcome to the Tenant Dashboard. Here you can manage your rental agreements.</p>
+        <AgreementTable userType={'tenant'}/>  
+      </div>
+    </Layout>
   );
-}
+};
 
 export default Tenant;

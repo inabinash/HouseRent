@@ -46,4 +46,39 @@ transactions(
   agreementId
 }
 `;
+//write gql to get agreement by agreementId
+export const AGREEMENTS_BY_ID = gql`
+query GetAgreementById($agreementId: BigInt!) {
+  agreements(where: { agreementId: $agreementId }) {
+    id
+    ownerAddress
+    tenantAddress
+    securityDeposit
+    monthlyRent
+    startTime
+    endTime
+    agreementId
+    isActive
+  }
+}
+`;
+// write gql to get agreement details of a tenant by agreementId
 
+export const AGREEMENTS_OF_TENANT_BY_ID = gql`
+  query GetAgreementOfTenantById($tenantAddress: Bytes!, $agreementId: BigInt!) {
+    agreements(
+      where: { tenantAddress: $tenantAddress, agreementId: $agreementId }
+    ) {
+      id
+      ownerAddress
+      tenantAddress
+      securityDeposit
+      monthlyRent
+      startTime
+      endTime
+      agreementId
+      isActive
+      isSecurityDeposited
+    }
+  }
+`;

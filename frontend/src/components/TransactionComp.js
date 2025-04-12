@@ -36,7 +36,7 @@ export function TransactionsTable({
 
   return (
     <Card className="h-full w-full">
-      <CardHeader floated={false} shadow={false} className="rounded-none">
+      <CardHeader floated={"false"} shadow={"false"} className="rounded-none">
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
@@ -175,7 +175,7 @@ export function TransactionsTable({
           </tbody>
         </table>
       </CardContent>
-      <CardActionArea className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+      {/* <CardActionArea className="flex items-center justify-between border-t border-blue-gray-50 p-4">
         <Button variant="outlined" size="sm">
           Previous
         </Button>
@@ -205,7 +205,7 @@ export function TransactionsTable({
         <Button variant="outlined" size="sm">
           Next
         </Button>
-      </CardActionArea>
+      </CardActionArea> */}
     </Card>
   );
 }

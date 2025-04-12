@@ -1,119 +1,78 @@
 import React, { useState , useContext} from "react";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
-
-
-import { TransactionsTable } from "./components/TransactionComp";
-import AgreementTable from "./components/AggrementComp";
-import CreateAgreementDialog from "./components/CreateAgrement";
-import { createAgreement } from "./useContract/writeContract";
-import { Typography , IconButton, Button} from "@mui/material";
-import ContractContext from "./context/ContractContext";
-import { useQuery } from "@tanstack/react-query";
-import { getAgreementsOfOwner } from "./useContract/readContract";
+import { Typography } from "@mui/material";
+// import { ArrowLeftIcon } from "@heroicons/react/24/solid";
+// import { TransactionsTable } from "./components/TransactionComp";
+// import AgreementTable from "./components/AggrementComp";
+// import CreateAgreementDialog from "./components/CreateAgrement";
+// import { createAgreement } from "./useContract/writeContract";
+// import ContractContext from "./context/ContractContext";
+// import { useQuery } from "@tanstack/react-query";
+// import { getAgreementsOfOwner } from "./useContract/readContract";
+import Layout from "./layout";
+import AgreementTable from "./components/AgreementTable/AgreementTable";
 
 const Owner = () => {
 
-  const [selectedAgreement, setSelectedAgreement] = useState(null);
-  const [showTransactions, setShowTransactions] = useState(false);
-  const [showCreateAgreement, setShowCreateAgreement] = useState(false);
-  const [agreementsData, setAgreementsData] = useState([]);
+  // const [selectedAgreement, setSelectedAgreement] = useState(null);
+  // const [showTransactions, setShowTransactions] = useState(false);
+  // const [showCreateAgreement, setShowCreateAgreement] = useState(false);
 
-  const { account ,contract} = useContext(ContractContext);
+  // const { account ,contract} = useContext(ContractContext);
   
-  const handleAgreementClick = (agreementId) => {
-    console.log("Agreement clicked", agreementId);
-    setSelectedAgreement(agreementId);
-    setShowTransactions(true);
-  };
+  // const handleAgreementClick = (agreementId) => {
+  //   console.log("Agreement clicked", agreementId);
+  //   setSelectedAgreement(agreementId);
+  //   setShowTransactions(true);
+  // };
 
-  const handleBackClick = () => {
-    // setShowTransactions(false);
-    // setSelectedAgreement(null);
-  };
+  // const handleBackClick = () => {
+  //   // setShowTransactions(false);
+  //   // setSelectedAgreement(null);
+  // };
 
-  // Use Custom Hooks
-  // const {
-  //   data: agreementsData,
-  //   loading: agreementsStatus,
-  //   refetch: refetchAgreements,
-  // } = useAgreementsOfOwner(user.address);
-
-  // const {
-  //   data: transactionsData,
-  //   loading: transactionsStatus,
-  //   refetch: refetchTransactions,
-  // } = useTransactionsOfOwner(user.address);
-
-  const handleCreateAgreementClick = () => {
-    console.log("Create Agreement clicked");
-    setShowCreateAgreement(true);
-  };
+  // const handleCreateAgreementClick = () => {
+  //   console.log("Create Agreement clicked");
+  //   setShowCreateAgreement(true);
+  // };
 
 
-  // Handle Create Agreement
-  const handleCreateAgreement = async (e, newAgreement) => {
-    console.log("newAgreement", newAgreement);
-    setShowCreateAgreement(false);
-    try{
-      const res = await createAgreement(contract , newAgreement);
-      console.log("Agreement created", res);
-    }catch(error){
-      console.error("Error creating agreement:", error);
-    }
+  // // Handle Create Agreement
+  // const handleCreateAgreement = async (e, newAgreement) => {
+  //   console.log("newAgreement", newAgreement);
+  //   setShowCreateAgreement(false);
+  //   try{
+  //     const res = await createAgreement(contract , newAgreement);
+  //     console.log("Agreement created", res);
+  //   }catch(error){
+  //     console.error("Error creating agreement:", error);
+  //   }
+  // };
 
-    // try {
-    //   console.log(newAgreement);
-    // setShowCreateAgreement(false);
-    //   const res = await createAgreement(
-    //     contract,
-    //     newAgreement.ownerAddress,
-    //     newAgreement.tenantAddress,
-    //     newAgreement.securityDeposit,
-    //     newAgreement.monthlyRent,
-    //     newAgreement.tenureInMonths
-    //   );
-    //   console.log("Agreement created", res);
-    //   await refetchAgreements();
-    //   await refetchTransactions();
-    // } catch (error) {
-    //   console.error("Error creating agreement:", error);
-    // }
-  };
-
-  const handleCancelCreateAgreement = () => {
-    setShowCreateAgreement(false);
-  };
+  // const handleCancelCreateAgreement = () => {
+  //   setShowCreateAgreement(false);
+  // };
 
 
-  const {data , isLoading} = useQuery(
-    {
-      queryKey: ["agreements" , account],
-      queryFn: ()=>getAgreementsOfOwner(account)
-    }
-  );
-
-  console.log("data", data);
-
-
-  // if (agreementsStatus === "loading" || transactionsStatus === "loading") {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (agreementsStatus === "error" || transactionsStatus === "error") {
-  //   return <div>Error loading data.</div>;
-  // }
+  // const {data , isLoading} = useQuery(
+  //   {
+  //     queryKey: ["agreements" , account],
+  //     queryFn: ()=>getAgreementsOfOwner(account)
+  //   }
+  // );
 
   return (
+    <Layout>
     <div className="container mx-auto mt-10">
       <Typography variant="h5" className="mb-2">
-        Owner Page
+        <span>Owner Page</span>
       </Typography>
       <Typography>
         Welcome to the Owner section. Here you can manage your properties and
         view tenant information.
       </Typography>
-      {showCreateAgreement  ?(
-
+      <AgreementTable userType="owner" />
+      {/* {showCreateAgreement  ?(
+        
         <CreateAgreementDialog
           onCreate={handleCreateAgreement}
           onCancel={handleCancelCreateAgreement}
@@ -151,8 +110,9 @@ const Owner = () => {
               onAgreementCreate={handleCreateAgreementClick}
             />
           )
-      }
-    </div>
+      } */} 
+    </div> 
+    </Layout>
   );
 };
 

@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import request from "graphql-request";
 import {
   TRANSACTIONS_OF_AGREEMENT,
   AGREEMENTS_BY_OWNER,
   AGREEMENTS_OF_TENANT,
+  AGREEMENTS_BY_ID,
+  AGREEMENTS_OF_TENANT_BY_ID,
 } from "./graph_queries";
 
 const contractJson = require("../contracts/HouseRent.json");
@@ -29,7 +30,14 @@ export const getTransactionsOfAgreement = async(agreementId)=>{
   return  await request(url, TRANSACTIONS_OF_AGREEMENT, { agreementId } , headers);
 }
 
-
+//Function to get agreement by agreementId
+export const getAgreementById = async(agreementId)=>{
+  return  await request(url, AGREEMENTS_BY_ID, { agreementId } , headers);
+}
+//Function to get agreement by agreementId for tenant
+export const getAgreementOfTenantById = async(tenantAddress,agreementId)=>{
+  return  await request(url, AGREEMENTS_OF_TENANT_BY_ID, { tenantAddress,agreementId } , headers);
+}
 
 // Function to get reputation list of user 
 export const getReputationOfUser = async (contract, user) => {
